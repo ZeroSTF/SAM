@@ -1,0 +1,108 @@
+{{ form_start(form) }}
+
+{% for flash_message in app.flashes('success') %}
+    <div class="alert alert-success">{{ flash_message }}</div>
+{% endfor %}
+
+{% for flash_message in app.flashes('error') %}
+    <div class="alert alert-danger">{{ flash_message }}</div>
+{% endfor %}
+
+<div class="form-group">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+        </div>
+        {{ form_widget(form.date, {'attr': {'class': 'form-control', 'placeholder': 'Choisissez la date de début'}}) }}
+    </div>
+    {{ form_errors(form.date, {'attr': {'class': 'invalid-feedback'}}) }}
+</div>
+
+<div class="form-group">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+        </div>
+        {{ form_widget(form.dateT, {'attr': {'class': 'form-control', 'placeholder': 'Choisissez la date de fin'}}) }}
+    </div>
+    {{ form_errors(form.dateT, {'attr': {'class': 'invalid-feedback'}}) }}
+</div>
+
+<div class="form-group">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-info-circle"></i></span>
+        </div>
+        {{ form_widget(form.details, {'attr': {'class': 'form-control', 'placeholder': 'Saisissez les détails'}}) }}
+    </div>
+    {{ form_errors(form.details, {'attr': {'class': 'invalid-feedback'}}) }}
+</div>
+
+<div class="form-group">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-check-circle"></i></span>
+        </div>
+        {{ form_widget(form.etat, {'attr': {'class': 'form-control', 'placeholder': 'Choisissez l\'état'}}) }}
+    </div>
+    {{ form_errors(form.etat, {'attr': {'class': 'invalid-feedback'}}) }}
+</div>
+
+<div class="form-group">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-money-bill-wave"></i></span>
+        </div>
+        {{ form_widget(form.prix, {'attr': {'class': 'form-control', 'placeholder': 'Saisissez le prix'}}) }}
+    </div>
+    {{ form_errors(form.prix, {'attr': {'class': 'invalid-feedback'}}) }}
+</div>
+
+<div class="form-group">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-tags"></i></span>
+        </div>
+        {{ form_widget(form.type, {'attr': {'class': 'form-control', 'placeholder': 'Choisissez le type'}}) }}
+    </div>
+    {{ form_errors(form.type, {'attr': {'class': 'invalid-feedback'}}) }}
+</div>
+
+<div class="form-group">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-home"></i></span>
+        </div>
+        {{ form_widget(form.bien, {'attr': {'class': 'form-control', 'placeholder': 'Choisissez la propriété concernée'}}) }}
+    </div>
+    {{ form_errors(form.bien, {'attr': {'class': 'invalid-feedback'}}) }}
+</div>
+
+<div class="form-group">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-user"></i></span>
+        </div>
+        {{ form_widget(form.users, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    {{ form_errors(form.users, {'attr': {'class': 'invalid-feedback'}}) }}
+</div>
+
+<div class="form-group">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-truck"></i></span>
+        </div>
+        {{ form_widget(form.fournisseurs, {'attr': {'class': 'form-control'}}) }}
+
+    </div>
+    {{ form_errors(form.fournisseurs, {'attr': {'class': 'invalid-feedback'}}) }}
+</div>
+
+{{ form_widget(form.validate_selection) }}
+{{ form_errors(form.validate_selection, {'attr': {'class': 'invalid-feedback'}}) }}
+
+
+<button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_label|default('Enregistrer') }}</button>
+
+{{ form_end(form) }}

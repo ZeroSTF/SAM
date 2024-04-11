@@ -1,0 +1,143 @@
+{{ form_start(form) }}
+
+{% for flash_message in app.flashes('success') %}
+    <div class="alert alert-success">{{ flash_message }}</div>
+{% endfor %}
+
+{% for flash_message in app.flashes('error') %}
+    <div class="alert alert-danger">{{ flash_message }}</div>
+{% endfor %}
+
+<div class="form-group">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-home"></i></span>
+        </div>
+        {{ form_widget(form.nom, {'attr': {'class': 'form-control', 'placeholder': 'Nom'}}) }}
+    </div>
+    {{ form_errors(form.nom, {'attr': {'class': 'invalid-feedback'}}) }}
+</div>
+
+{# Fields from BienType form file #}
+<div class="form-group">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-info-circle"></i></span>
+        </div>
+        {{ form_widget(form.description, {'attr': {'class': 'form-control', 'placeholder': 'Description'}}) }}
+    </div>
+    {{ form_errors(form.description, {'attr': {'class': 'invalid-feedback'}}) }}
+</div>
+
+<div class="form-group">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-shield-alt"></i></span>
+        </div>
+        {{ form_widget(form.etat, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    {{ form_errors(form.etat, {'attr': {'class': 'invalid-feedback'}}) }}
+</div>
+
+<div class="form-group">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-shield-alt"></i></span>
+        </div>
+        {{ form_widget(form.type, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    {{ form_errors(form.type, {'attr': {'class': 'invalid-feedback'}}) }}
+</div>
+
+<div class="form-group">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-puzzle-piece"></i></span>
+        </div>
+        {{ form_widget(form.bien, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    {{ form_errors(form.bien, {'attr': {'class': 'invalid-feedback'}}) }}
+</div>
+
+    <div class="form-group">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-cog"></i></span>
+            </div>
+            {{ form_widget(form.x, {'attr': {'class': 'form-control', 'placeholder': 'X'}}) }}
+        </div>
+        {{ form_errors(form.x, {'attr': {'class': 'invalid-feedback'}}) }}
+    </div>
+
+    <div class="form-group">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-cog"></i></span>
+            </div>
+            {{ form_widget(form.y, {'attr': {'class': 'form-control', 'placeholder': 'Y'}}) }}
+        </div>
+        {{ form_errors(form.y, {'attr': {'class': 'invalid-feedback'}}) }}
+    </div>
+
+<input type="hidden" id="lat" name="lat" value="{{ bien.lat|default(34.8534) }}">
+<input type="hidden" id="lon" name="lon" value="{{ bien.lon|default(10.1078) }}">
+<input type="hidden" id="adresse" name="adresse" value="{{ bien.adresse|default('No address available') }}">
+
+{# End of conditional fields #}
+
+
+<button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> {{ button_label|default('Enregistrer') }}</button>
+<div class="container mt-4">
+    <div id="map" style="width: 500px; height: 500px;"></div>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script>
+    // Set up the map with initial coordinates from the 'bien' variable
+    const initialLat = {{ bien.lat|default(34.8534) }};
+    const initialLon = {{ bien.lon|default(10.1078) }};
+    const map = L.map('map').setView([initialLat, initialLon], 8);
+
+    // Add the tile layer from OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy; OpenStreetMap contributors',
+        maxZoom: 18,
+    }).addTo(map);
+
+    // Initialize variables to store location information and marker
+    let clickedLat = initialLat;
+    let clickedLon = initialLon;
+    let clickedAddress = "{{ bien.adresse|default('No address available') }}";
+    let marker = L.marker([clickedLat, clickedLon]).addTo(map);
+    marker.bindPopup(clickedAddress).openPopup();
+
+    // Function to handle click event on the map
+    function onMapClick(e) {
+        clickedLat = e.latlng.lat;
+        clickedLon = e.latlng.lng;
+
+        // Use a reverse geocoding service to get the address based on lat/lng
+        fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${clickedLat}&lon=${clickedLon}`)
+            .then(response => response.json())
+            .then(data => {
+                clickedAddress = data.display_name;
+                marker.setLatLng([clickedLat, clickedLon]);
+                marker.bindPopup(clickedAddress).openPopup();
+
+                // Update hidden input values
+                document.getElementById('lat').value = clickedLat;
+                document.getElementById('lon').value = clickedLon;
+                document.getElementById('adresse').value = clickedAddress;
+            })
+            .catch(error => {
+                console.error("Error fetching address:", error);
+            });
+    }
+
+    // Add the click event listener to the map
+    map.on('click', onMapClick);
+</script>
+
+
+{{ form_end(form) }}

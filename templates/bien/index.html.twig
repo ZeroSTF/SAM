@@ -1,0 +1,52 @@
+{% extends 'template.html.twig' %}
+
+{% block body %}
+    <h1 class="mb-4">Propriétés</h1>
+
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th><a href="{{ path('app_bien_index', {'sort': 'id'}) }}" class="{{ sortField == 'id' ? 'active' : '' }}">ID</a></th>
+                                        <th><a href="{{ path('app_bien_index', {'sort': 'nom'}) }}" class="{{ sortField == 'nom' ? 'active' : '' }}">Nom</a></th>
+                                        <th><a href="{{ path('app_bien_index', {'sort': 'description'}) }}" class="{{ sortField == 'description' ? 'active' : '' }}">Description</a></th>
+                                        <th><a href="{{ path('app_bien_index', {'sort': 'etat'}) }}" class="{{ sortField == 'etat' ? 'active' : '' }}">Etat</a></th>
+                                        <th><a href="{{ path('app_bien_index', {'sort': 'type'}) }}" class="{{ sortField == 'type' ? 'active' : '' }}">Type</a></th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for bien in biens %}
+                                        <tr>
+                                            <td>{{ bien.id }}</td>
+                                            <td>{{ bien.nom }}</td>
+                                            <td>{{ bien.description|slice(0, 25) ~ (bien.description|length > 25 ? '...' : '') }}</td>
+                                            <td>{{ bien.etat }}</td>
+                                            <td>{{ bien.type }}</td>
+                                            <td class="project-actions text-right" style="white-space: nowrap;">
+                                                <a href="{{ path('app_bien_show', {'id': bien.getId()}) }}"
+                                                   class="btn btn-sm btn-primary"><i
+                                                            class="fas fa-eye"></i> Voir</a>
+                                                <a href="{{ path('app_bien_edit', {'id': bien.id}) }}"
+                                                   class="btn btn-sm btn-warning"><i
+                                                            class="fas fa-edit"></i> Modifier</a>
+                                                {{ include('bien/_delete_form.html.twig') }}
+                                            </td>
+                                        </tr>
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="12">Aucun enregistrement trouvé</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <a href="{{ path('app_bien_new') }}" class="nav-link btn btn-success">
+                                <i class="fas fa-plus"></i>
+                                Créer un nouveau
+                                bien</a>
+
+
+{% endblock %}
+
+

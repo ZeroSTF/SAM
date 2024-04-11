@@ -1,0 +1,24 @@
+{% extends 'template.html.twig' %}
+
+{% block body %}
+    <h1>Détails de la notification</h1>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Message :</th>
+            <td>{{ notification.message }}</td>
+        </tr>
+        <tr>
+            <th>Date d'envoi :</th>
+            <td class="text-nowrap">{{ notification.date|date('Y-m-d H:i:s')|date_modify('3 hours')|date('M d, Y h:i A') }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <a href="{{ path('app_notification_index') }}" class="btn btn-outline-secondary mt-3"><i class="fas fa-arrow-left"></i>
+        Retour à la liste</a>
+
+
+    {{ include('notification/_delete_form.html.twig') }}
+
+{% endblock %}

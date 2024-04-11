@@ -1,0 +1,51 @@
+{% extends 'template.html.twig' %}
+
+{% block body %}
+
+    <h1 class="mb-4">Fiche Technique</h1>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Description</th>
+                <th>Indicateur Temporel</th>
+                <th>Indicateur en Km</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for action in actions %}
+                <tr>
+                    <td>{{ action.id }}</td>
+                    <td>{{ action.description|slice(0, 50) ~ (action.description|length > 50 ? '...' : '') }}</td>
+                    <td>{{ action.iT }} jours</td>
+                    <td>{{ action.iKm }} Km</td>
+                    <td class="project-actions text-right" style="white-space: nowrap;">
+                        <a href="{{ path('app_action_show', {'id': action.getId(), 'idb': idb}) }}"
+                           class="btn btn-sm btn-primary"><i
+                                    class="fas fa-eye"></i> Voir</a>
+                        <a href="{{ path('app_action_edit', {'id': action.id, 'idb': idb}) }}"
+                           class="btn btn-sm btn-warning"><i
+                                    class="fas fa-edit"></i> Modifier</a>
+                        {{ include('action/_delete_form.html.twig', {'idb': idb}) }}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="12">Aucun enregistrement trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+    <a href="{{ path('app_action_new', {'idb': idb}) }}" class="nav-link btn btn-success">
+        <i class="fas fa-plus"></i>
+        Ajouter une nouvelle
+        action</a>
+
+{% endblock %}
+
+

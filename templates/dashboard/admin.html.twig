@@ -1,0 +1,58 @@
+{% extends 'template.html.twig' %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="text-center"><i class="bi bi-shop"></i> S A M </h1>
+        <h2 class="text-center mb-5">BIENVENUE A VOTRE DASHBOARD</h2>
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6 col-sm-8">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-truck"></i> Gestion Des Fournisseurs</h5>
+                        <p class="card-text">Voir la liste des fournisseurs.</p>
+                        <a href="/fournisseur" class="btn btn-primary"><i class="bi bi-eye"></i> Voir</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-8">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-tools"></i> Les Maintenances</h5>
+                        <p class="card-text">Vérifiez le statut des maintenances et gérez-les.</p>
+                        <a href="/maintenance" class="btn btn-primary"><i class="bi bi-eye"></i> Voir</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-8">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-person"></i> Les Utilisateurs</h5>
+                        <p class="card-text">Vérifiez l'état de vos utilisateurs et gérez-les.</p>
+                        <a href="/user" class="btn btn-primary"><i class="bi bi-eye"></i> Voir</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-8">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-house"></i> Gestion des Propriétés</h5>
+                        <p class="card-text">Gérér vos Propriétés.</p>
+                        <a href="/bien" class="btn btn-primary"><i class="bi bi-eye"></i> Voir</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-8">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-bell"></i> Gestion des Notifications</h5>
+                        <p class="card-text">Accédez à vos notifications.</p>
+                        <a href="/notification" class="btn btn-primary"><i class="bi bi-eye"></i> Voir</a>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+{% endblock %}

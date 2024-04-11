@@ -1,0 +1,59 @@
+{% extends 'template.html.twig' %}
+
+{% block body %}
+    <h1>Détails de la maintenance</h1>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>ID :</th>
+            <td>{{ maintenance.id }}</td>
+        </tr>
+        <tr>
+            <th>Date de Début :</th>
+            <td class="text-nowrap">{{ maintenance.date|date('Y-m-d H:i:s')|date_modify('3 hours')|date('M d, Y h:i A') }}</td>
+        </tr>
+        <tr>
+            <th>Date de Fin :</th>
+            <td class="text-nowrap">{{ maintenance.dateT|date('Y-m-d H:i:s')|date_modify('3 hours')|date('M d, Y h:i A') }}</td>
+        </tr>
+        <tr>
+            <th>Détails :</th>
+            <td>{{ maintenance.details}}</td>
+        </tr>
+        <tr>
+            <th>Etat :</th>
+            <td>{{ maintenance.etat}}</td>
+        </tr>
+        <tr>
+            <th>Prix :</th>
+            <td>{{ maintenance.prix}} DT</td>
+        </tr>
+        <tr>
+            <th>Type :</th>
+            <td>{{ maintenance.type}}</td>
+        </tr>
+        <tr>
+            <th>Propriété Concernée :</th>
+            <td>{{ maintenance.bien.id}} - {{ maintenance.bien.nom }}</td>
+        </tr>
+        <tr>
+            <th>Faite par :</th>
+            <td>
+                {% for user in maintenance.users %}
+                    <li>{{ user.prenom }} {{ user.nom }}</li>
+                {% endfor %}
+                {% for fournisseur in maintenance.fournisseurs %}
+                    <li>Fournisseur: {{ fournisseur.nom }}</li>
+                {% endfor %}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a href="{{ path('app_maintenance_index') }}" class="btn btn-outline-secondary mt-3"><i class="fas fa-arrow-left"></i>
+        Retour à la liste</a>
+
+
+    {{ include('maintenance/_delete_form.html.twig') }}
+
+{% endblock %}

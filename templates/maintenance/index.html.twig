@@ -1,0 +1,58 @@
+{% extends 'template.html.twig' %}
+
+{% block body %}
+
+    <h1 class="mb-4">Maintenances</h1>
+
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Date de début</th>
+                                        <th>Date de fin</th>
+                                        <th>Etat</th>
+                                        <th>Prix</th>
+                                        <th>Type</th>
+                                        <th>Propriété concernée</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for maintenance in maintenances %}
+                                        <tr>
+                                            <td>{{ maintenance.id }}</td>
+                                            <td class="text-nowrap">{{ maintenance.date|date('Y-m-d H:i:s')|date_modify('3 hours')|date('M d, Y h:i A') }}</td>
+                                            <td class="text-nowrap">{{ maintenance.dateT|date('Y-m-d H:i:s')|date_modify('3 hours')|date('M d, Y h:i A') }}</td>
+                                            <td>{{ maintenance.etat }}</td>
+                                            <td>{{ maintenance.prix }} DT</td>
+                                            <td>{{ maintenance.type }}</td>
+                                            <th>{{ maintenance.bien.id }} - {{ maintenance.bien.nom }}</th>
+                                            <td class="project-actions text-right" style="white-space: nowrap;">
+                                                <a href="{{ path('app_maintenance_show', {'id': maintenance.getId()}) }}"
+                                                   class="btn btn-sm btn-primary"><i
+                                                            class="fas fa-eye"></i> Voir</a>
+                                                <a href="{{ path('app_maintenance_edit', {'id': maintenance.id}) }}"
+                                                   class="btn btn-sm btn-warning"><i
+                                                            class="fas fa-edit"></i> Modifier</a>
+                                                {{ include('maintenance/_delete_form.html.twig') }}
+                                            </td>
+                                        </tr>
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="12">Aucun enregistrement trouvé</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+
+                                </table>
+                            </div>
+                            <a href="{{ path('app_maintenance_new') }}" class="nav-link btn btn-success">
+                                <i class="fas fa-plus"></i>
+                                Ajouter une nouvelle
+                                maintenance</a>
+
+
+{% endblock %}
+
+
